@@ -1,0 +1,52 @@
+﻿@model List<ABCRetailWebApp.Models.Product>
+
+@{
+    ViewData["Title"] = "Products (Table Storage)";
+}
+
+<h2>Products (Table Storage)</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Add Product</a>
+</p>
+
+@if (Model == null || !Model.Any())
+{
+    <p>No products yet.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>PartitionKey</th>
+                <th>RowKey</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Timestamp</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in Model)
+            {
+                <tr>
+                    <td>@p.PartitionKey</td>
+                    <td>@p.RowKey</td>
+                    <td>@p.Name</td>
+                    <td>@p.Description</td>
+                    <td>@p.Price</td>
+                    <td>@p.Timestamp</td>
+                    <td>
+                        <form asp-action="Delete" method="post" style="display:inline">
+                            <input type="hidden" name="partitionKey" value="@p.PartitionKey" />
+                            <input type="hidden" name="rowKey" value="@p.RowKey" />
+                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

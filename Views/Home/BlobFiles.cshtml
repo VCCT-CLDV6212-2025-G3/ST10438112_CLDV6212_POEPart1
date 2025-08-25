@@ -1,0 +1,18 @@
+﻿@model List<string>
+
+<h2>Upload Image (Blob Storage)</h2>
+<form method="post" enctype="multipart/form-data" asp-action="UploadFile">
+    <input type="file" name="file" />
+    <button type="submit">Upload</button>
+</form>
+
+<h2>Stored Images (Blob Storage)</h2>
+<ul>
+    @foreach (var file in Model)
+    {
+        <li>
+            @file |
+            <a asp-action="DownloadFile" asp-route-fileName="@file">Download</a>
+        </li>
+    }
+</ul>

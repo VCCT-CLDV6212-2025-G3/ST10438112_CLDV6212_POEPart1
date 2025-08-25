@@ -1,0 +1,15 @@
+﻿@model List<string>
+
+<h2>Add Transactions/Inventory (Queue Storage) </h2>
+<form method="post" asp-action="AddQueueMessage">
+    <input type="text" name="message" placeholder="Enter a message (e.g. Processing order #123)" />
+    <button type="submit">Add Message</button>
+</form>
+
+<h2>Queue Messages</h2>
+<ul>
+    @foreach (var msg in Model)
+    {
+        <li>@msg</li>
+    }
+</ul>

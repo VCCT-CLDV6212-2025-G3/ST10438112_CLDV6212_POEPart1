@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>
+        <a asp-action="BlobFiles" asp-controller="Home" class="btn btn-primary">
+            Manage Images (Blob Storage)
+        </a>
+        <a asp-action="QueueMessages" asp-controller="Home" class="btn btn-secondary">
+            Transactions & Inventory (Queue Storage)
+        </a>
+        <a asp-action="FileContracts" asp-controller="Home" class="btn btn-info">
+            Manage Documents (File Storage)
+        </a>
+        <a asp-action="Index" asp-controller="Products" class="btn btn-warning">
+            Manage Products (Table Storage)
+        </a>
+    </p>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
