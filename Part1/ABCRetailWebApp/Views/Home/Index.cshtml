@@ -10,6 +10,11 @@
         </a>
         <a asp-action="QueueMessages" asp-controller="Home" class="btn btn-secondary">
             Transactions & Inventory (Queue Storage)
+            <h2>Submit Transaction (Queue)</h2>
+            <form method="post" asp-action="AddQueueMessage">
+                <textarea name="message" rows="5" cols="60" placeholder='{"orderId":"O-1001","customerId":"C-42","items":[{"sku":"ABC-001","qty":2}]}'></textarea>
+                <button type="submit">Enqueue</button>
+            </form>
         </a>
         <a asp-action="FileContracts" asp-controller="Home" class="btn btn-info">
             Manage Documents (File Storage)

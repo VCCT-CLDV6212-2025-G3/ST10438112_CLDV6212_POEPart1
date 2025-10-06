@@ -1,7 +1,7 @@
 ﻿/*
  * @author: Kylan Chart Frittelli (ST10438112)
  * @file: ProductsController.cs
- * @since [Updated: 22/08/2025]
+ * @since [Updated: 04/10/2025]
  * @function: Controller for managing products in the ABC Retail Web Application.
  */
 
@@ -11,6 +11,7 @@ using System.Reflection;
 using System.Security.Cryptography.Xml;
 using ABCRetailWebApp.Models;
 using ABCRetailWebApp.Services;
+using Azure;
 using Azure.Data.Tables;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
@@ -84,13 +85,38 @@ namespace ABCRetailWebApp.Controllers
         // this action handles the form submission to create a new product
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Product model)
+        public async Task<IActionResult> Create(
+        [Bind("Name,Description,Price,PartitionKey,RowKey")] Product model)
         {
             if (!ModelState.IsValid)
                 return View(model);
 
             var client = GetClient();
-            await client.UpsertEntityAsync(model, TableUpdateMode.Replace);
+
+            if (string.IsNullOrWhiteSpace(model.PartitionKey))
+                model.PartitionKey = "Products";
+
+            if (string.IsNullOrWhiteSpace(model.RowKey))
+                model.RowKey = Guid.NewGuid().ToString("N");
+
+            try
+            {
+                //AddEntityAsync will throw a 409 if the same PartitionKey+RowKey already exists
+                await client.AddEntityAsync(model);
+            }
+            catch (Azure.RequestFailedException ex) when (ex.Status == 409)
+            {
+                //duplicate key conflict
+                ModelState.AddModelError("", "A product with the same key already exists.");
+                return View(model);
+            }
+            catch (Azure.RequestFailedException ex)
+            {
+                //other potential Azure table issues
+                ModelState.AddModelError("", $"Error saving product: {ex.Message}");
+                return View(model);
+            }
+
             return RedirectToAction(nameof(Index));
         }
         //-----------------------------------------------------------//
@@ -118,6 +144,6 @@ namespace ABCRetailWebApp.Controllers
  *Huawei Technologies, 2023. Cloud Computing Technologies. Hangzhou: Posts & Telecom Press.
  * Mrzyglód, K., 2022.Azure for Developers. 2nd ed.Birmingham: Packt Publishing.
  * Microsoft Corporation, 2022.The Developer’s Guide to Azure.Redmond: Microsoft Press.
- * OpenAI, 2025.ChatGPT. [online] Available at: https://openai.com/chatgpt/ [Accessed 22 August 2025].
+ * OpenAI, 2025.ChatGPT. [online] Available at: https://openai.com/chatgpt/ [Accessed 04 October 2025].
  *Github Inc., 2025.GitHub Copilot. [online] Available at: https://github.com [Accessed 22 August 2025].
  */

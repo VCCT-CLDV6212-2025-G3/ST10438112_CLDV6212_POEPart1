@@ -1,7 +1,7 @@
 ﻿/*
  * @author: Kylan Chart Frittelli (ST10438112)
  * @file: FileStorageService.cs
- * @since [Updated: 26/08/2025]
+ * @since [Updated: 05/10/2025]
  * @function: Service for managing file operations in Azure File Storage
  *  (File Storage Service runs into errors even after ChatGPT 
  *  and GitHub Copilot assistance as a last resort)
@@ -46,12 +46,15 @@ namespace ABCRetailWebApp.Services
             var shareClient = _fileServiceClient.GetShareClient(shareName);
             await shareClient.CreateIfNotExistsAsync();
 
-            
+
             ShareDirectoryClient dirClient = string.IsNullOrWhiteSpace(directoryName)
                 ? shareClient.GetRootDirectoryClient()
                 : shareClient.GetDirectoryClient(directoryName);
 
-            await dirClient.CreateIfNotExistsAsync();
+            if (!string.IsNullOrWhiteSpace(directoryName))
+            {
+                await dirClient.CreateIfNotExistsAsync();
+            }
 
             var fileClient = dirClient.GetFileClient(fileName);
 
@@ -128,6 +131,6 @@ namespace ABCRetailWebApp.Services
  *Huawei Technologies, 2023. Cloud Computing Technologies. Hangzhou: Posts & Telecom Press.
  * Mrzyglód, K., 2022.Azure for Developers. 2nd ed.Birmingham: Packt Publishing.
  * Microsoft Corporation, 2022.The Developer’s Guide to Azure.Redmond: Microsoft Press.
- * OpenAI, 2025.ChatGPT. [online] Available at: https://openai.com/chatgpt/ [Accessed 26 August 2025].
+ * OpenAI, 2025.ChatGPT. [online] Available at: https://openai.com/chatgpt/ [Accessed 5 October 2025].
  *Github Inc., 2025.GitHub Copilot. [online] Available at: https://github.com [Accessed 26 August 2025].
  */

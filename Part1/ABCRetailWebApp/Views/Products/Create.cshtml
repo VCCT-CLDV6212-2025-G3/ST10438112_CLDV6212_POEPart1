@@ -1,0 +1,56 @@
+﻿@model ABCRetailWebApp.Models.Product
+@{
+    ViewData["Title"] = "Add Product";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (TempData["Err"] is string err && !string.IsNullOrWhiteSpace(err))
+{
+    <div class="alert alert-danger">@err</div>
+}
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+<form asp-action="Create" method="post" novalidate>
+    <div class="mb-3">
+        <label asp-for="PartitionKey" class="form-label"></label>
+        <input asp-for="PartitionKey" class="form-control" placeholder="Products" />
+        <div class="form-text">Default is <code>Products</code>. You can override if needed.</div>
+        <span asp-validation-for="PartitionKey" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="RowKey" class="form-label"></label>
+        <input asp-for="RowKey" class="form-control" placeholder="(auto-generated if left blank)" />
+        <div class="form-text">Keep blank to auto-generate a GUID, or paste your own ID.</div>
+        <span asp-validation-for="RowKey" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Price" class="form-label"></label>
+        <input asp-for="Price" class="form-control" type="number" step="0.01" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success">Save</button>
+    <a asp-action="Index" class="btn btn-secondary">Back</a>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

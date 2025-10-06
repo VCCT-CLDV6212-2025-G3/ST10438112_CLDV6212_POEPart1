@@ -361,3 +361,22 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# local development settings (contains secrets)
+local.settings.json
+
+# function host logs and temp artifacts
+bin/
+obj/
+.azurefunctions/
+
+# published zip packages
+*.zip
+
+# user-specific deployment profiles
+PublishProfiles/
+*.pubxml
+*.pubxml.user
+
+# .vs config cache
+.vs/

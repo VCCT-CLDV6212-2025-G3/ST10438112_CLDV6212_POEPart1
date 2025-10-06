@@ -1,7 +1,7 @@
 ﻿/*
  * @author: Kylan Chart Frittelli (ST10438112)
  * @file: HomeController.cs
- * @since [Updated: 22/08/2025]
+ * @since [Updated: 04/10/2025]
  * @function: Controller for managing home page 
    and file operations in the ABC Retail Web Application.
  */
@@ -85,14 +85,17 @@ public class HomeController : Controller
     //-----------------------------------------------------------//
 
     //--------------------Queue Operations-------------------------------//
-    [HttpPost]
     //this action adds a message to an Azure Queue Storage
+    [HttpPost]
     public async Task<IActionResult> AddQueueMessage(string message)
     {
         const string queueName = "orders";
-        if (!string.IsNullOrWhiteSpace(message))
-            await _queueService.AddMessageAsync(queueName, message);
+        if (string.IsNullOrWhiteSpace(message)) return RedirectToAction(nameof(QueueMessages));
 
+        try { using var _ = System.Text.Json.JsonDocument.Parse(message); }
+        catch { TempData["Err"] = "Please submit valid JSON matching the transaction schema."; return RedirectToAction(nameof(QueueMessages)); }
+
+        await _queueService.AddMessageAsync(queueName, message);
         return RedirectToAction(nameof(QueueMessages));
     }
     [HttpGet]
@@ -149,6 +152,6 @@ public class HomeController : Controller
  *Huawei Technologies, 2023. Cloud Computing Technologies. Hangzhou: Posts & Telecom Press.
  * Mrzyglód, K., 2022.Azure for Developers. 2nd ed.Birmingham: Packt Publishing.
  * Microsoft Corporation, 2022.The Developer’s Guide to Azure.Redmond: Microsoft Press.
- * OpenAI, 2025.ChatGPT. [online] Available at: https://openai.com/chatgpt/ [Accessed 22 August 2025].
+ * OpenAI, 2025.ChatGPT. [online] Available at: https://openai.com/chatgpt/ [Accessed 04 October 2025].
  *Github Inc., 2025.GitHub Copilot. [online] Available at: https://github.com [Accessed 22 August 2025].
  */
