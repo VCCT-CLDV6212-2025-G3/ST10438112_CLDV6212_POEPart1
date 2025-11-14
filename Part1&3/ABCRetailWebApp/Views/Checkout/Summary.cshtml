@@ -1,0 +1,30 @@
+﻿@model ABCRetailWebApp.Models.Cart
+<h2>Order Summary</h2>
+<hr />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Price (R)</th>
+            <th>Qty</th>
+            <th>Total (R)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Price</td>
+                <td>@item.Quantity</td>
+                <td>@(item.Price* item.Quantity)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h3>Total: R @Model.Items.Sum(i => i.Price * i.Quantity)</h3>
+<form method="post" action="/Checkout/PlaceOrder">
+    <button class="btn btn-success">Confirm & Place Order</button>
+</form>

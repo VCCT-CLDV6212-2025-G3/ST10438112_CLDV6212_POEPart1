@@ -74,8 +74,10 @@ namespace ABCRetailWebApp.Controllers
             // defaults to make adding 5 records fast
             return View(new Product
             {
-                PartitionKey = "Retail",                //group all rows
-                RowKey = Guid.NewGuid().ToString("N")   //unique id
+                PartitionKey = "Products",                //group all rows
+                RowKey = Guid.NewGuid().ToString("N"),   //unique id
+                ProductId = new Random().Next(10000, 99999)    // NEW: INT ID for Cart + SQL
+
             });
         }
         //-----------------------------------------------------------//
@@ -86,7 +88,7 @@ namespace ABCRetailWebApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-        [Bind("Name,Description,Price,PartitionKey,RowKey")] Product model)
+        [Bind("Name,Description,Price,PartitionKey,RowKey,ProductId")] Product model)
         {
             if (!ModelState.IsValid)
                 return View(model);
@@ -129,7 +131,13 @@ namespace ABCRetailWebApp.Controllers
         public async Task<IActionResult> Delete(string partitionKey, string rowKey)
         {
             var client = GetClient();
-            await client.DeleteEntityAsync(partitionKey, rowKey);
+            try
+            {
+                await client.DeleteEntityAsync(partitionKey, rowKey);
+            }
+            catch (RequestFailedException ex)
+            {
+            }
             return RedirectToAction(nameof(Index));
         }
         //-----------------------------------------------------------//

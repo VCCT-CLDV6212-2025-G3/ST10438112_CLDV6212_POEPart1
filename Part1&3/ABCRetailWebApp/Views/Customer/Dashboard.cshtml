@@ -1,0 +1,30 @@
+﻿@model IEnumerable<CustomerOrderViewModel>
+
+<h2 class="mt-4 mb-4">My Orders</h2>
+
+@if (!Model.Any())
+{
+    <p class="text-muted">You have not placed any orders yet.</p>
+}
+else
+{
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Order #</th>
+                <th>Date</th>
+                <th>Total Amount (R)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var o in Model)
+            {
+                <tr>
+                    <td>@o.OrderId</td>
+                    <td>@o.OrderDate.ToShortDateString()</td>
+                    <td>@o.TotalAmount</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

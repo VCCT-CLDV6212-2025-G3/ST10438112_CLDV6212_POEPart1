@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+
+<h2>Login</h2>
+
+<form method="post">
+    <label>Username:</label>
+    <input type="text" name="username" required /><br />
+
+    <label>Password:</label>
+    <input type="password" name="password" required /><br />
+
+    <label>Role:</label>
+    <select name="role">
+        <option value="Customer">Customer</option>
+        <option value="Admin">Admin</option>
+    </select><br />
+
+    <button type="submit">Login</button>
+
+    <p style="color:red">@ViewBag.Error</p>
+</form>

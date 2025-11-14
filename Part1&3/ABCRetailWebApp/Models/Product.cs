@@ -15,12 +15,20 @@ using Azure.Data.Tables;
 //----------------Product Model-------------------------------//
 public class Product : ITableEntity
 {
-    //properties for the Product entity
-    public string PartitionKey { get; set; }  
-    public string RowKey { get; set; }
-    [Required] public string Name { get; set; }
-    public string Description { get; set; }
-    [Range(0, double.MaxValue)] public double Price { get; set; }
+    public string PartitionKey { get; set; } = "Products";
+    public string RowKey { get; set; } = Guid.NewGuid().ToString("N");
+
+    public int ProductId { get; set; }
+
+    [Required]
+    public string? Name { get; set; }
+
+    public string? Description { get; set; }
+
+    [Required]
+    [Range(0.01, double.MaxValue, ErrorMessage = "Price must be positive.")]
+    public double Price { get; set; }
+
     public DateTimeOffset? Timestamp { get; set; }
     public ETag ETag { get; set; }
 }

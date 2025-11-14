@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Product>
+
+<h2 class="mt-4 mb-4">Product Management</h2>
+
+<a asp-action="Create" class="btn btn-success mb-3">Add New Product</a>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>ProductId</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price (R)</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var p in Model)
+        {
+            <tr>
+                <td>@p.ProductId</td>
+                <td>@p.Name</td>
+                <td>@p.Description</td>
+                <td>@p.Price</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@p.ProductId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@p.ProductId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@p.ProductId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

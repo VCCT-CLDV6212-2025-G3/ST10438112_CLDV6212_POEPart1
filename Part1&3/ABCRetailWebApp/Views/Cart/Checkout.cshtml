@@ -1,0 +1,30 @@
+﻿@model IEnumerable<CartItem>
+
+<h2 class="mt-4 mb-4">Checkout</h2>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Price (R)</th>
+            <th>Qty</th>
+            <th>Line Total (R)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Price</td>
+                <td>@item.Quantity</td>
+                <td>@item.LineTotal</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<form method="post" asp-action="PlaceOrder">
+    <button class="btn btn-primary mt-3">Place Order</button>
+    <a class="btn btn-secondary mt-3" asp-action="Index">Back to Cart</a>
+</form>

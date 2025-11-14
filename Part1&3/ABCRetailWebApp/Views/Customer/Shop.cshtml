@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Product>
+
+<h2 class="mt-4 mb-4">Shop Products</h2>
+
+<div class="row">
+    @foreach (var p in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5>@p.Name</h5>
+                    <p>@p.Description</p>
+                    <p><strong>R @p.Price</strong></p>
+
+                    <a asp-controller="Cart"
+                       asp-action="Add"
+                       asp-route-id="@p.ProductId"
+                       asp-route-name="@p.Name"
+                       asp-route-price="@p.Price"
+                       class="btn btn-success btn-sm">Add to Cart</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

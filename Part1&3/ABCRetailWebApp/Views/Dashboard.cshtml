@@ -1,0 +1,23 @@
+﻿@model IEnumerable<CustomerOrderViewModel>
+
+<h2>My Orders</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Order #</th>
+            <th>Date</th>
+            <th>Total (R)</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var o in Model)
+{
+    <tr>
+        <td>@o.OrderId</td>
+        <td>@o.OrderDate.ToShortDateString()</td>
+        <td>@o.TotalAmount</td>
+    </tr>
+}
+    </tbody>
+</table>

@@ -51,11 +51,8 @@ namespace ABCRetailWebApp.Services
                 ? shareClient.GetRootDirectoryClient()
                 : shareClient.GetDirectoryClient(directoryName);
 
-            if (!string.IsNullOrWhiteSpace(directoryName))
-            {
                 await dirClient.CreateIfNotExistsAsync();
-            }
-
+            
             var fileClient = dirClient.GetFileClient(fileName);
 
             //create the file with its final size

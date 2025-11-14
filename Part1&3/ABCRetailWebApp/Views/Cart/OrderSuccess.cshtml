@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "Order Success";
+}
+
+<h2 class="mt-4 mb-4">Order Placed Successfully!</h2>
+
+<div class="alert alert-success">
+    <p>Your order has been placed.</p>
+    <p><strong>Order Number:</strong> @ViewBag.OrderId</p>
+</div>
+
+<a asp-controller="Customer" asp-action="Dashboard" class="btn btn-primary">
+    View My Orders
+</a>

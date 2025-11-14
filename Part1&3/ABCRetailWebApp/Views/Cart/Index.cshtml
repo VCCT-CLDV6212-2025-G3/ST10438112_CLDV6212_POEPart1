@@ -1,0 +1,31 @@
+﻿@model List<ABCRetailWebApp.Models.CartItem>
+
+<h2>Your Cart</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Price (R)</th>
+            <th>Quantity</th>
+            <th>Total (R)</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Price</td>
+                <td>@item.Quantity</td>
+                <td>@item.LineTotal</td>
+                <td>
+                    <a class="btn btn-danger" href="/Cart/Remove/@item.ProductId">Remove</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a class="btn btn-success" href="/Cart/Checkout">Checkout</a>
