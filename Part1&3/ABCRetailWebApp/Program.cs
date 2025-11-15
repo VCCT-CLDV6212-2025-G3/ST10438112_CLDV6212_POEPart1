@@ -7,6 +7,7 @@
 
 //-----------namespace ABCRetailWebApp------------------//
 using ABCRetailWebApp.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,12 @@ builder.Services.AddSession(options =>
 var storageCs = builder.Configuration.GetSection("Storage")["ConnectionString"];
 if (string.IsNullOrWhiteSpace(storageCs))
     Console.WriteLine("WARNING: Missing Storage:ConnectionString");
+
+if (string.IsNullOrWhiteSpace(builder.Configuration.GetConnectionString("AzureSQLConnection"))
+    && string.IsNullOrWhiteSpace(builder.Configuration["AzureSQLConnection"]))
+{
+    Console.WriteLine("WARNING: Missing AzureSQLConnection");
+}
 
 builder.Services.AddScoped<SqlAuthService>();
 

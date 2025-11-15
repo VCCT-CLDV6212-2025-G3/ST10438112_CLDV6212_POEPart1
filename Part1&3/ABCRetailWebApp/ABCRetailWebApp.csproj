@@ -13,15 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Views\Dashboard.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ContainerPort Include="8081" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Views\Dashboard.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
